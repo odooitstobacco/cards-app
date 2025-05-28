@@ -1,5 +1,6 @@
 import streamlit as st
 import random
+from dataNivel import obtenerNivelJuego
 
 
 st.title("🎈 Juego de Memoria ")
@@ -15,20 +16,35 @@ if "mostrar" not in st.session_state:
     st.session_state.resultado = ""
     st.session_state.btn_jugar = True
 
+def minivel(msgOpcion):
+    if msgOpcion == "Básico":
+        valor = 1
+    elif msgOpcion == "Intermedio":
+        valor = 2
+    else:
+        valor = 3
+    return valor
+
+nivel = st.radio(
+    "¿Qué nivel deseas?",
+    ["Básico", "Intermedio", "Avanzado"]
+)
+nivelSeleccionado  =minivel(nivel)
+dataGame = obtenerNivelJuego(nivelSeleccionado)
 
 # Mostrar la sección si el estado lo indica
 if st.session_state.mostrar:
-    st.subheader("🕒 Memoriza los números:")
+    st.subheader("🕒 Memoriza las Cartas:")
     # Botón para alternar visibilidad
     cols = st.columns(5)
     for i, numero in enumerate(st.session_state.numeros):
       with cols[i % 5]:
-         st.button(f"🎴 {numero}", disabled=True)
-    if st.button("Ocultar Números"):
+         st.button(f"🎴 {dataGame[numero]}", disabled=True)
+    if st.button("Ocultar Valores"):
         st.session_state.mostrar = not st.session_state.mostrar
         st.rerun()
 else:
-    st.subheader(f"🔍 Encuentra el número: **{st.session_state.objetivo}**")
+    st.subheader(f"🔍 Encuentra la carta: **{dataGame[st.session_state.objetivo]}**")
     cols = st.columns(5)
     for i, numero in enumerate(st.session_state.numeros):
         with cols[i % 5]:
@@ -39,7 +55,7 @@ else:
                     st.session_state.encontrado = True
                 else:
                     st.session_state.errores += 1
-                    st.session_state.resultado = f"❌ Incorrecto [Error # {st.session_state.errores}] Era {st.session_state.objetivo}"
+                    st.session_state.resultado = f"❌ Incorrecto [Error # {st.session_state.errores}] Era {dataGame[st.session_state.objetivo]}"
 
 # Mostrar resultado
 if st.session_state.resultado:
