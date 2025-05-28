@@ -49,7 +49,7 @@ else:
     for i, numero in enumerate(st.session_state.numeros):
         with cols[i % 5]:
             if st.button("🎴", key=f"btn_{numero}"):
-                print(numero, st.session_state.objetivo, numero == st.session_state.objetivo)
+                # print(numero, st.session_state.objetivo, numero == st.session_state.objetivo)
                 if numero == st.session_state.objetivo:
                     st.session_state.resultado = f"✅ ¡Correcto! Abriste {dataGame[numero]}"
                     st.session_state.encontrado = True
