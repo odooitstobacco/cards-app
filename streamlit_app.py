@@ -51,11 +51,11 @@ else:
             if st.button("🎴", key=f"btn_{numero}"):
                 print(numero, st.session_state.objetivo, numero == st.session_state.objetivo)
                 if numero == st.session_state.objetivo:
-                    st.session_state.resultado = f"✅ ¡Correcto! "
+                    st.session_state.resultado = f"✅ ¡Correcto! Abriste {dataGame[numero]}"
                     st.session_state.encontrado = True
                 else:
                     st.session_state.errores += 1
-                    st.session_state.resultado = f"❌ Incorrecto [Error # {st.session_state.errores}] Era {dataGame[st.session_state.objetivo]}"
+                    st.session_state.resultado = f"❌ Incorrecto [Error # {st.session_state.errores}] Abriste {dataGame[numero]} Era {dataGame[st.session_state.objetivo]}"
 
 # Mostrar resultado
 if st.session_state.resultado:
